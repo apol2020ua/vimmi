@@ -3,9 +3,18 @@ import { AppModule } from './modules/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { Environment } from './environment';
+import { readFileSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const key = readFileSync(__dirname + '/../ssl_fake/code.key');
+  const cert = readFileSync(__dirname + '/../ssl_fake/code.crt');
+
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions: {
+      key,
+      cert,
+    },
+  });
   app.enableCors();
   const configService: ConfigService<Environment> = app.get(ConfigService);
   const config = new DocumentBuilder()
