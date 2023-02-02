@@ -6,8 +6,8 @@ import { Environment } from './environment';
 import { readFileSync } from 'fs';
 
 async function bootstrap() {
-  const key = readFileSync(__dirname + '/../ssl_fake/84-246.85.252-privateKey.key');
-  const cert = readFileSync(__dirname + '/../ssl_fake/84-246.85.252.crt');
+  const key = readFileSync(__dirname + '/../ssl_fake/84-246.85.252_3000-privateKey.key');
+  const cert = readFileSync(__dirname + '/../ssl_fake/84-246.85.252_3000.crt');
 
   const app = await NestFactory.create(AppModule, {
     httpsOptions: {
