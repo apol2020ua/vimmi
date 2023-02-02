@@ -1,6 +1,7 @@
 import { ClassConstructor, plainToClass } from 'class-transformer';
 import { validateSync } from 'class-validator';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
+import { Logger } from '@nestjs/common';
 
 export function validate<T>(
   config: Record<string, any>,
@@ -22,7 +23,7 @@ export function validate<T>(
       .map((err) => err.toString(false))
       .toString();
 
-    throw new Error(errMessage);
+    new Logger('EnvValidation').log(errMessage);
   }
   return validatedConfig;
 }
