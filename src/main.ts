@@ -3,20 +3,10 @@ import { AppModule } from './modules/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { Environment } from './environment';
-import { readFileSync } from 'fs';
 
 async function bootstrap() {
-  const key = readFileSync(__dirname + '/../ssl_fake/code.key');
-  const cert = readFileSync(__dirname + '/../ssl_fake/code.crt');
-
-  const app = await NestFactory.create(AppModule, {
-    httpsOptions: {
-      key,
-      cert,
-    },
-  });
+  const app = await NestFactory.create(AppModule);
   app.enableCors();
-
   const configService: ConfigService<Environment> = app.get(ConfigService);
   const config = new DocumentBuilder()
     .setTitle('Vimmi')
